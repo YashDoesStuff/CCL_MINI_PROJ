@@ -1,0 +1,570 @@
+/* ── AdminPanel — Neo-Brutalist ── */
+
+/* ── Page ── */
+.page { width: 100%; padding: 2rem 2rem; box-sizing: border-box; }
+
+.pageHeader { margin-bottom: 1.75rem; border-bottom: 4px solid #000; padding-bottom: 1rem; }
+
+.title {
+  font-family: 'Sora', sans-serif; font-size: 2rem; font-weight: 900;
+  color: #000; margin: 0 0 0.3rem; text-transform: uppercase; letter-spacing: -0.02em;
+}
+
+.subtitle { font-family: 'Inter', sans-serif; font-size: 0.88rem; color: #555; margin: 0; }
+
+/* ── Tab Bar ── */
+.tabBar {
+  display: flex;
+  gap: 0;
+  border-bottom: 4px solid #000;
+  margin-bottom: 1.75rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  align-items: stretch;    /* keep all tabs same height */
+  flex-shrink: 0;          /* bar itself never shrinks */
+}
+.tabBar::-webkit-scrollbar { display: none; }
+
+.tabBtn {
+  padding: 0.65rem 1.4rem;
+  background: #fff;
+  border: 3px solid #000;
+  border-bottom: none;
+  border-right: none;
+  color: #555;
+  font-family: 'Sora', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: background 0.1s;
+  box-sizing: border-box;  /* border never shifts layout */
+  flex-shrink: 0;          /* tab never shrinks */
+  min-width: max-content;  /* width set by content, never changes */
+}
+.tabBtn:last-child { border-right: 3px solid #000; }
+.tabBtn:hover { background: #f3f4f6; color: #000; }
+
+.tabActive { background: #fde047 !important; color: #000 !important; }
+
+/* Lock content area height so switching tabs never jumps the page */
+.tabContent {
+  min-height: 600px;
+  position: relative;
+}
+
+/* ── Sub-tab Bar ── */
+.subTabBar { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+
+.subTab {
+  padding: 0.4rem 1rem; border: 3px solid #000; background: #fff;
+  color: #000; font-family: 'Sora', sans-serif; font-size: 0.82rem;
+  font-weight: 700; cursor: pointer; text-transform: uppercase;
+  transition: background 0.1s, box-shadow 0.1s;
+  box-shadow: 3px 3px 0 #000;
+}
+.subTab:hover { background: #f3f4f6; transform: translate(-1px,-1px); box-shadow: 4px 4px 0 #000; }
+
+.subTabActive { background: #fde047 !important; }
+
+/* ── Table ── */
+.tableHeader {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.tableTitle {
+  font-family: 'Sora', sans-serif; font-size: 1.1rem;
+  font-weight: 900; color: #000; text-transform: uppercase;
+}
+
+.addBtn {
+  padding: 0.45rem 1.1rem; border: 3px solid #000; background: #000;
+  color: #fff; font-family: 'Sora', sans-serif; font-size: 0.82rem;
+  font-weight: 700; cursor: pointer; box-shadow: 3px 3px 0 #000;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.addBtn:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 #000; }
+
+.tableWrapper { overflow-x: auto; border: 4px solid #000; box-shadow: 5px 5px 0 #000; }
+
+.table { width: 100%; border-collapse: collapse; }
+
+.th {
+  padding: 0.65rem 1rem; text-align: left;
+  font-family: 'Sora', sans-serif; font-size: 0.75rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.06em; color: #fff;
+  background: #000; border-bottom: 3px solid #000;
+}
+
+.tr { border-bottom: 2px solid #000; transition: background 0.1s; }
+.tr:hover { background: #fef9e7; }
+.tr:last-child { border-bottom: none; }
+
+.td { padding: 0.7rem 1rem; font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #000; }
+
+.emptyRow {
+  padding: 2rem; text-align: center;
+  font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #555; font-style: italic;
+}
+
+.rowActions { display: flex; gap: 0.5rem; }
+
+.editBtn, .deleteBtn {
+  padding: 0.3rem 0.75rem; border: 2px solid #000;
+  font-family: 'Sora', sans-serif; font-size: 0.72rem;
+  font-weight: 700; cursor: pointer; text-transform: uppercase;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.editBtn { background: #dbeafe; color: #000; }
+.deleteBtn { background: #fee2e2; color: #000; }
+.editBtn:hover, .deleteBtn:hover { transform: translate(-1px,-1px); box-shadow: 2px 2px 0 #000; }
+
+/* ── Modal ── */
+.modalOverlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+  z-index: 1000; display: flex; align-items: center;
+  justify-content: center; padding: 1rem;
+}
+
+.modal {
+  background: #fff; border: 4px solid #000; border-radius: 0;
+  padding: 1.75rem; width: 100%; max-width: 460px;
+  box-shadow: 8px 8px 0 #000; animation: modalIn 0.15s ease;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translate(4px, 4px); }
+  to   { opacity: 1; transform: translate(0, 0); }
+}
+
+.modalHeader {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1.25rem; border-bottom: 3px solid #000; padding-bottom: 0.75rem;
+}
+
+.modalTitle {
+  font-family: 'Sora', sans-serif; font-size: 1.05rem;
+  font-weight: 900; color: #000; margin: 0; text-transform: uppercase;
+}
+
+.modalClose {
+  background: #000; border: none; color: #fff;
+  font-size: 1.1rem; font-weight: 700; cursor: pointer;
+  width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+}
+.modalClose:hover { background: #333; }
+
+.form { display: flex; flex-direction: column; gap: 1rem; }
+
+.field { display: flex; flex-direction: column; gap: 0.35rem; }
+
+.label {
+  font-family: 'Sora', sans-serif; font-size: 0.75rem;
+  font-weight: 700; color: #000; text-transform: uppercase; letter-spacing: 0.04em;
+}
+
+.input, .select {
+  padding: 0.6rem 0.9rem; border: 3px solid #000; background: #fff;
+  color: #000; font-family: 'Inter', sans-serif; font-size: 0.88rem;
+  outline: none; transition: box-shadow 0.1s; width: 100%; border-radius: 0;
+}
+.input:focus, .select:focus { box-shadow: 3px 3px 0 #000; }
+.select option { background: #fff; color: #000; }
+
+.modalActions { display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 0.5rem; }
+
+.cancelModalBtn {
+  padding: 0.5rem 1.1rem; border: 3px solid #000; background: #fff;
+  color: #000; font-family: 'Sora', sans-serif; font-size: 0.82rem;
+  font-weight: 700; cursor: pointer; text-transform: uppercase;
+}
+.cancelModalBtn:hover { background: #f3f4f6; }
+
+.saveBtn {
+  padding: 0.5rem 1.4rem; border: 3px solid #000; background: #000;
+  color: #fff; font-family: 'Sora', sans-serif; font-size: 0.85rem;
+  font-weight: 700; cursor: pointer; display: flex; align-items: center;
+  gap: 0.4rem; text-transform: uppercase; box-shadow: 3px 3px 0 #555;
+}
+.saveBtn:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+.saveBtn:hover:not(:disabled) { background: #222; }
+
+/* ── Generate Tab ── */
+.generateTab { max-width: 100%; }
+
+.sectionTitle {
+  font-family: 'Sora', sans-serif; font-size: 1.2rem;
+  font-weight: 900; color: #000; margin: 0 0 0.3rem; text-transform: uppercase;
+}
+
+.sectionDesc {
+  font-family: 'Inter', sans-serif; font-size: 0.82rem;
+  color: #555; margin: 0 0 1.25rem;
+}
+
+.row {
+  display: flex; gap: 0.75rem; margin-bottom: 1rem;
+  align-items: center; flex-wrap: wrap;
+}
+
+.primaryBtn {
+  padding: 0.6rem 1.4rem; border: 3px solid #000; background: #000;
+  color: #fff; font-family: 'Sora', sans-serif; font-size: 0.88rem;
+  font-weight: 700; cursor: pointer; display: flex; align-items: center;
+  gap: 0.4rem; text-transform: uppercase; white-space: nowrap;
+  box-shadow: 4px 4px 0 #555; transition: transform 0.1s, box-shadow 0.1s;
+}
+.primaryBtn:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+.primaryBtn:hover:not(:disabled) { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 #555; }
+
+.successBox {
+  padding: 0.75rem 1rem; border: 3px solid #000;
+  background: #d1fae5; color: #000;
+  font-family: 'Sora', sans-serif; font-size: 0.85rem;
+  font-weight: 700; box-shadow: 3px 3px 0 #000;
+}
+
+.errorBox2 {
+  padding: 0.65rem 1rem; border: 3px solid #000;
+  background: #fee2e2; color: #000;
+  font-family: 'Sora', sans-serif; font-size: 0.85rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 0.5rem; margin-top: 0.75rem; box-shadow: 3px 3px 0 #000;
+}
+
+.retryBtn {
+  background: #000; border: none; color: #fff;
+  font-family: 'Sora', sans-serif; font-size: 0.75rem;
+  font-weight: 700; padding: 0.25rem 0.6rem; cursor: pointer;
+}
+
+/* ── DnD / Edit area ── */
+.dndArea { margin-top: 1.25rem; }
+.dndHint { font-family: 'Inter', sans-serif; font-size: 0.8rem; color: #555; margin-bottom: 0.75rem; }
+.noData { margin-top: 1.5rem; font-family: 'Inter', sans-serif; font-size: 0.88rem; color: #555; }
+
+.feedbackBox {
+  margin: 0.75rem 0; padding: 0.55rem 1rem;
+  border: 3px solid #000; background: #d1fae5;
+  color: #000; font-family: 'Sora', sans-serif;
+  font-size: 0.82rem; font-weight: 700; cursor: pointer;
+}
+
+.assignInfo { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #000; margin-bottom: 0.75rem; }
+.assignInfo strong { font-weight: 800; }
+
+/* ── Availability Grid ── */
+.availGrid {
+  display: grid; grid-template-columns: 72px repeat(5, 1fr);
+  gap: 3px; margin-top: 1.25rem; max-width: 700px;
+}
+
+.availCorner {}
+
+.availDayHeader {
+  padding: 0.4rem 0.25rem; text-align: center;
+  font-family: 'Sora', sans-serif; font-size: 0.72rem; font-weight: 800;
+  color: #000; text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+.availTimeLabel {
+  padding: 0.4rem 0.25rem; font-family: 'Inter', sans-serif;
+  font-size: 0.7rem; color: #555; display: flex;
+  align-items: center; justify-content: center; font-weight: 600;
+}
+
+.availCell {
+  height: 40px; border: 2px solid #d1d5db; background: #f9fafb;
+  cursor: pointer; transition: background 0.1s;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; color: transparent;
+}
+.availCell:hover { background: #e0f2fe; border-color: #000; }
+
+.availBlocked {
+  background: #fee2e2 !important; border-color: #000 !important;
+  color: #000 !important; font-weight: 700;
+}
+
+/* ── Availability info bar ── */
+.availInfoBar {
+  display: flex; align-items: center; gap: 0.75rem;
+  margin: 1rem 0 0.5rem; flex-wrap: wrap;
+}
+
+.availName {
+  font-family: 'Sora', sans-serif; font-size: 1rem;
+  font-weight: 900; color: #000; text-transform: uppercase;
+}
+
+.availAllFree {
+  font-family: 'Sora', sans-serif; font-size: 0.78rem; font-weight: 700;
+  color: #000; background: #d1fae5; padding: 0.2rem 0.7rem;
+  border: 2px solid #000; box-shadow: 2px 2px 0 #000;
+}
+
+.availBlocked2 {
+  font-family: 'Sora', sans-serif; font-size: 0.78rem; font-weight: 700;
+  color: #000; background: #fee2e2; padding: 0.2rem 0.7rem;
+  border: 2px solid #000; box-shadow: 2px 2px 0 #000;
+}
+
+.availLegend { display: flex; gap: 1rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+
+.legendPill {
+  display: flex; align-items: center; gap: 0.4rem;
+  font-family: 'Sora', sans-serif; font-size: 0.75rem;
+  color: #000; font-weight: 700;
+}
+
+.legendDotGreen {
+  width: 14px; height: 14px; background: #d1fae5;
+  border: 2px solid #000; display: inline-block;
+}
+
+.legendDotRed {
+  width: 14px; height: 14px; background: #fee2e2;
+  border: 2px solid #000; display: inline-block;
+}
+
+.availCellRO { cursor: default !important; pointer-events: none; display: flex; align-items: center; justify-content: center; }
+.availCellRO:hover { background: #f9fafb !important; }
+
+/* ── Loading / Shared ── */
+.loadingRow {
+  display: flex; align-items: center; gap: 0.5rem; padding: 1.25rem 0;
+  font-family: 'Sora', sans-serif; font-size: 0.85rem;
+  color: #000; font-weight: 700;
+}
+
+.spinner {
+  width: 16px; height: 16px; border: 3px solid #e5e7eb;
+  border-top-color: #000; border-radius: 50%;
+  animation: spin 0.6s linear infinite; display: inline-block; flex-shrink: 0;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Editable Timetable Grid ── */
+.editableGrid { margin-top: 1.5rem; animation: fadeUp 0.2s ease; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.gridTopBar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; margin-bottom: 0.85rem; flex-wrap: wrap;
+}
+
+.gridSectionLabel {
+  font-family: 'Sora', sans-serif; font-size: 1rem;
+  font-weight: 900; color: #000; text-transform: uppercase;
+}
+
+.publishBtn {
+  padding: 0.5rem 1.25rem; border: 3px solid #000; background: #000;
+  color: #fff; font-family: 'Sora', sans-serif; font-size: 0.85rem;
+  font-weight: 700; cursor: pointer; text-transform: uppercase;
+  box-shadow: 4px 4px 0 #555; transition: transform 0.1s, box-shadow 0.1s;
+}
+.publishBtn:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 #555; }
+
+.publishedBadge {
+  padding: 0.4rem 1rem; border: 3px solid #000;
+  background: #d1fae5; color: #000;
+  font-family: 'Sora', sans-serif; font-size: 0.8rem; font-weight: 700;
+  box-shadow: 3px 3px 0 #000;
+}
+
+.gridHint {
+  font-family: 'Inter', sans-serif; font-size: 0.75rem;
+  color: #555; margin-top: 0.65rem; text-align: right;
+}
+
+/* Timetable table */
+.ttGridWrapper { overflow-x: auto; border: 4px solid #000; box-shadow: 6px 6px 0 #000; background: #fff; }
+
+.ttTable { width: 100%; border-collapse: collapse; min-width: 700px; }
+
+.ttCornerTh {
+  padding: 0.55rem 0.75rem; text-align: center;
+  font-family: 'Sora', sans-serif; font-size: 0.7rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: #fff; background: #000;
+  border-bottom: 3px solid #000; border-right: 3px solid #000; width: 90px;
+}
+
+.ttTh {
+  padding: 0.55rem 0.5rem; text-align: center;
+  font-family: 'Sora', sans-serif; font-size: 0.78rem; font-weight: 800;
+  color: #000; background: #fde047;
+  border-bottom: 3px solid #000; border-right: 2px solid #000;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+.ttTimeCell {
+  padding: 0.4rem 0.6rem; font-family: 'Sora', sans-serif;
+  font-size: 0.72rem; font-weight: 700; color: #fff;
+  text-align: center; background: #000;
+  border-right: 3px solid #000; border-bottom: 2px solid #000; white-space: nowrap;
+}
+
+.ttCell {
+  padding: 3px; border-bottom: 2px solid #000;
+  border-right: 2px solid #000; vertical-align: top; min-width: 100px;
+}
+
+.ttSlotCard {
+  width: 100%; min-height: 72px; padding: 0.4rem 0.45rem 0.35rem;
+  border: 2px solid transparent; display: flex; flex-direction: column;
+  gap: 2px; position: relative;
+}
+
+.slotFilled { background: #d1fae5; border-color: #000; }
+.slotEmpty  { background: #fef3c7; border-color: #000; }
+
+.ttSubject {
+  font-family: 'Sora', sans-serif; font-size: 0.72rem; font-weight: 800;
+  color: #000; line-height: 1.2; display: block;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+.ttFaculty {
+  font-family: 'Inter', sans-serif; font-size: 0.67rem; color: #333;
+  display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+.ttRoom {
+  font-family: 'Sora', sans-serif; font-size: 0.62rem; font-weight: 700;
+  color: #fff; background: #000; display: inline-block;
+  padding: 0.05rem 0.3rem; margin-top: 1px;
+}
+
+.ttUnassigned {
+  font-family: 'Inter', sans-serif; font-size: 0.63rem;
+  color: #b45309; display: block; font-style: italic; font-weight: 700;
+}
+
+.ttAssignBtn {
+  position: absolute; bottom: 4px; right: 4px;
+  width: 22px; height: 22px; border: 2px solid #000;
+  background: #fff; color: #000; font-size: 0.75rem;
+  font-weight: 700; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0; line-height: 1; transition: background 0.1s;
+}
+.ttAssignBtn:hover { background: #000; color: #fff; }
+
+.ttAddBtn {
+  width: 100%; min-height: 72px; border: 3px dashed #d1d5db;
+  background: transparent; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.15s, background 0.15s;
+}
+.ttAddBtn:hover { border-color: #000; background: #fef9e7; }
+
+.ttAddPlus {
+  font-size: 1.5rem; font-weight: 700; color: #9ca3af; line-height: 1;
+  transition: color 0.15s;
+}
+.ttAddBtn:hover .ttAddPlus { color: #000; }
+
+/* Break rows */
+.ttBreakTime {
+  padding: 0.3rem 0.6rem; font-family: 'Sora', sans-serif;
+  font-size: 0.65rem; font-weight: 700; color: #fff;
+  text-align: center; background: #374151;
+  border-right: 3px solid #000; white-space: nowrap;
+}
+
+.ttBreakCell {
+  text-align: center; font-family: 'Sora', sans-serif;
+  font-size: 0.72rem; font-weight: 800;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: #374151; background: #f3f4f6;
+  padding: 0.3rem; border-bottom: 2px solid #000;
+}
+
+/* Slot status colours (Generate tab) */
+.status_scheduled { background: #d1fae5; border-color: #000; }
+.status_cancelled  { background: #fee2e2; border-color: #000; }
+.status_open       { background: #fef3c7; border-color: #000; }
+
+/* ── Assign Faculty Modal ── */
+.assignModal {
+  background: #fff; border: 4px solid #000; border-radius: 0;
+  padding: 1.5rem 1.75rem; width: 100%; max-width: 480px;
+  max-height: 80vh; display: flex; flex-direction: column;
+  box-shadow: 8px 8px 0 #000; animation: modalIn 0.15s ease;
+}
+
+.assignForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.assignRow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.assignSlotInfo {
+  font-family: 'Sora', sans-serif; font-size: 0.8rem;
+  font-weight: 700; color: #555; margin: 0.15rem 0 0;
+  text-transform: uppercase;
+}
+
+.facultyList {
+  overflow-y: auto; flex: 1; margin-top: 1rem;
+  display: flex; flex-direction: column; gap: 0.5rem; padding-right: 2px;
+}
+.facultyList::-webkit-scrollbar { width: 4px; }
+.facultyList::-webkit-scrollbar-thumb { background: #000; }
+
+.facultyItem { border: 3px solid #000; overflow: hidden; box-shadow: 3px 3px 0 #000; }
+
+.facultyName {
+  padding: 0.55rem 0.85rem; font-family: 'Sora', sans-serif;
+  font-size: 0.85rem; font-weight: 800; color: #fff;
+  background: #000; border-bottom: 2px solid #000;
+}
+
+.noSubjects {
+  padding: 0.45rem 0.85rem; font-family: 'Inter', sans-serif;
+  font-size: 0.75rem; color: #555; font-style: italic;
+}
+
+.subjectRows { display: flex; flex-direction: column; }
+
+.subjectRow {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.5rem 0.85rem; background: #fff;
+  border: none; border-top: 2px solid #000;
+  color: #000; font-family: 'Sora', sans-serif; font-size: 0.82rem;
+  font-weight: 600; text-align: left; cursor: pointer;
+  transition: background 0.1s;
+}
+.subjectRow:first-child { border-top: none; }
+.subjectRow:hover:not(:disabled) { background: #fef9e7; }
+.subjectRow:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.subjectDot {
+  width: 8px; height: 8px; background: #000;
+  flex-shrink: 0; border-radius: 0;
+}
+
+.assignArrow { margin-left: auto; font-weight: 900; font-size: 0.85rem; color: #000; }
+
+@media (max-width: 640px) {
+  .row { flex-direction: column; align-items: stretch; }
+  .tabBtn { padding: 0.55rem 0.75rem; font-size: 0.75rem; }
+  .assignRow { grid-template-columns: 1fr; }
+}

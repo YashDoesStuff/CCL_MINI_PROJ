@@ -1,0 +1,361 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+/* ── Mobile Controls ── */
+.mobileControls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.arrowBtn {
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  border: 3px solid #000;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  box-shadow: 3px 3px 0px #000;
+}
+.arrowBtn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px #000;
+}
+
+.datePickerWrapper {
+  position: relative;
+}
+
+.calendarBtn {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  padding: 0.6rem 1.5rem;
+  border: 3px solid #000;
+  border-radius: 8px;
+  background: #fde047;
+  cursor: pointer;
+  box-shadow: 3px 3px 0px #000;
+}
+
+.datePickerMenu {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border: 3px solid #000;
+  border-radius: 8px;
+  box-shadow: 4px 4px 0px #000;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.datePickerItem {
+  padding: 0.75rem 1.5rem;
+  font-family: 'Sora', sans-serif;
+  font-weight: 600;
+  background: none;
+  border: none;
+  border-bottom: 2px solid #000;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+}
+.datePickerItem:last-child {
+  border-bottom: none;
+}
+.datePickerItem:hover {
+  background: #fde047;
+}
+
+/* ── Mobile List ── */
+.mobileList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mobileRow {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 3px solid #000;
+  border-radius: 8px;
+  box-shadow: 3px 3px 0px #000;
+  overflow: hidden;
+}
+
+.mobileBreakRow {
+  background: #f3f4f6;
+  border: 3px dashed #000;
+}
+
+.mobileTimeLabel {
+  background: #000;
+  color: #fff;
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.85rem;
+}
+
+.mobileCell {
+  padding: 1rem;
+  min-height: 80px;
+}
+
+.mobileBreakCell {
+  padding: 1rem;
+  text-align: center;
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* ── Desktop Grid ── */
+.desktopGridContainer {
+  overflow-x: auto;
+  border: 4px solid #000;
+  box-shadow: 6px 6px 0px #000;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.desktopGrid {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1000px;
+  table-layout: fixed;
+}
+
+.desktopGrid th, .desktopGrid td {
+  border: 2px solid #000;
+  padding: 0;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.gridCorner {
+  background: #000;
+  color: #fff;
+  font-family: 'Sora', sans-serif;
+  padding: 0.5rem;
+  width: 100px;
+}
+
+.gridTh {
+  background: #fde047;
+  font-family: 'Sora', sans-serif;
+  font-size: 0.85rem;
+  padding: 0.5rem;
+}
+
+.gridThBreak {
+  background: #e5e7eb;
+  font-family: 'Sora', sans-serif;
+  font-size: 0.8rem;
+  padding: 0.5rem;
+  width: 40px; /* Slimmer break columns */
+}
+
+.gridDayLabel {
+  background: #000;
+  color: #fff;
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  padding: 0.5rem;
+}
+
+.gridBreakCell {
+  background: #f3f4f6;
+  background-image: repeating-linear-gradient(
+    45deg,
+    #e5e7eb,
+    #e5e7eb 10px,
+    #f3f4f6 10px,
+    #f3f4f6 20px
+  );
+}
+
+.breakTextVertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin: auto;
+}
+
+
+
+.gridTd {
+  height: 100px;
+}
+
+.gridCellContent {
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.1s;
+}
+
+/* ── Base Cell Styles ── */
+.cellBase {
+  background: #fff;
+}
+.cellEmpty {
+  background: #fafafa;
+}
+
+/* Colors for Roles/States */
+.cellMine {
+  background: #bbf7d0; /* Green — own lecture */
+}
+.cellCancelled {
+  background: #fecaca; /* Red */
+  text-decoration: line-through;
+}
+.cellOpen {
+  background: #fef08a; /* Yellow — claimable */
+}
+.cellOther {
+  background: #e5e7eb; /* Gray — other faculty */
+}
+.cellFree {
+  background: #fafafa;
+  border: 2px dashed #d1d5db;
+}
+/* Student-only: open (cancelled-by-faculty) slot shown as a calm free period */
+.cellFreeLecture {
+  background: #dbeafe;
+  border: 2px dashed #93c5fd;
+}
+
+/* Hover glow on clickable cells in edit mode */
+.cellClickable:hover {
+  filter: brightness(0.93);
+  box-shadow: inset 0 0 0 2px #000;
+}
+
+/* Interaction */
+.cellSelected {
+  box-shadow: inset 0px 0px 0px 4px #000 !important;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { background-color: #fff; }
+  50% { background-color: #f3f4f6; }
+  100% { background-color: #fff; }
+}
+
+/* ── Slot Card Contents ── */
+.slotCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  width: 100%;
+}
+
+.slotSubject {
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-align: center;
+}
+.slotFaculty {
+  font-size: 0.75rem;
+  color: #333;
+  text-align: center;
+}
+.slotOpenLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #854d0e;
+  text-align: center;
+}
+.slotUnassigned {
+  font-size: 0.75rem;
+  color: #ef4444;
+  font-weight: 700;
+}
+.slotRoom {
+  font-size: 0.7rem;
+  background: #000;
+  color: #fff;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
+
+/* Free slot */
+.freeSlot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  width: 100%;
+}
+.freeLabel {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  font-style: italic;
+}
+.freeLectureLabel {
+  font-size: 0.75rem;
+  color: #1d4ed8;
+  font-weight: 700;
+  font-style: italic;
+}
+.addHint {
+  font-size: 0.68rem;
+  color: #6b7280;
+  font-weight: 600;
+  border: 1px dashed #9ca3af;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
+
+/* ── Legend ── */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 4px solid #000;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 4px 4px 0px #000;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.legendBox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #000;
+  border-radius: 4px;
+}
